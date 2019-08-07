@@ -51,12 +51,13 @@ public class MakeAppointmentActivity extends AppCompatActivity {
         editText = (EditText) findViewById(R.id.endTime);
         endTime = editText.getText().toString();
 
-        if(ownerName == null || description == null || beginTime == null || endTime == null){
+        if(description.equals("") || ownerName.equals("")){
             String message = "Missing required field";
             System.err.println(message);
             Intent intent = new Intent(this, ErrorActivity.class);
             intent.putExtra("errorMessage", message);
             startActivity(intent);
+            return;
         }
 
         String beginTimeArr[] = beginTime.split(" ");
@@ -66,6 +67,7 @@ public class MakeAppointmentActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ErrorActivity.class);
             intent.putExtra("errorMessage", message);
             startActivity(intent);
+            return;
         }
 
         String endTimeArr[] = endTime.split(" ");
@@ -75,6 +77,7 @@ public class MakeAppointmentActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ErrorActivity.class);
             intent.putExtra("errorMessage", message);
             startActivity(intent);
+            return;
         }
 
         try{
@@ -87,9 +90,8 @@ public class MakeAppointmentActivity extends AppCompatActivity {
             String message = e.toString();
             intent.putExtra("errorMessage", message);
             startActivity(intent);
+            return;
         }
-
-
 
         String fileName = ownerName.trim();
         String[] nameArr = fileName.split(" ");
@@ -118,6 +120,7 @@ public class MakeAppointmentActivity extends AppCompatActivity {
                 String message = e.toString();
                 intent.putExtra("errorMessage", message);
                 startActivity(intent);
+                return;
             }
         }
         else {
@@ -137,6 +140,7 @@ public class MakeAppointmentActivity extends AppCompatActivity {
             String message = e.toString();
             intent.putExtra("errorMessage", message);
             startActivity(intent);
+            return;
         }
 
         System.out.println("read file after dump");
@@ -155,6 +159,11 @@ public class MakeAppointmentActivity extends AppCompatActivity {
             intent.putExtra("errorMessage", message);
             startActivity(intent);
         }
+        Intent intent = new Intent(this, DisplayMessageActivity.class);
+        String message = appointment.print_appointment();
+        intent.putExtra("message", message);
+        intent.putExtra("title", "Appointment created!");
+        startActivity(intent);
     }
 
     /*
@@ -175,5 +184,4 @@ public class MakeAppointmentActivity extends AppCompatActivity {
                 startActivity(intent);
             }
             */
-
 }
