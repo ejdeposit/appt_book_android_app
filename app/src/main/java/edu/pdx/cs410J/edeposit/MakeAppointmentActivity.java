@@ -115,6 +115,7 @@ public class MakeAppointmentActivity extends AppCompatActivity {
                 book = textParser.parse();
                 if(appointment != null){
                     book.addAppointment(appointment);
+                    book.sort_appointments();
                 }
 
             }
@@ -132,6 +133,7 @@ public class MakeAppointmentActivity extends AppCompatActivity {
             //create new appointment book and write to file
             book= new AppointmentBook(ownerName);
             book.addAppointment(appointment);
+            book.sort_appointments();
         }
 
 

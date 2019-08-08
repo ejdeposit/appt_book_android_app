@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">apptbook-android</string>
+    <string name="title_activity_show_all_appointments">ShowAllAppointmentsActivity</string>
 </resources>
