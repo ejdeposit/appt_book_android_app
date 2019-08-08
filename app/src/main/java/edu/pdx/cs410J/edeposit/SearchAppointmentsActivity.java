@@ -1,0 +1,146 @@
+package edu.pdx.cs410J.edeposit;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+
+import java.io.File;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Date;
+
+public class SearchAppointmentsActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search_appointments);
+    }
+
+    public void searchForAppointmentsWithinRange(View view){
+        String ownerName=null;
+        String beginTime=null;
+        String endTime=null;
+
+        EditText editText = (EditText) findViewById(R.id.owner);
+        ownerName = editText.getText().toString();
+
+        editText = (EditText) findViewById(R.id.beginTime);
+        beginTime = editText.getText().toString();
+
+        editText = (EditText) findViewById(R.id.endTime);
+        endTime = editText.getText().toString();
+
+        String fileName = ownerName.trim();
+        String[] nameArr = fileName.split(" ");
+        fileName = "";
+        for (String name : nameArr) {
+            fileName = fileName + name;
+        }
+        fileName=fileName+".apb";
+
+        File file = new File(this.getFilesDir(), fileName);
+
+        AppointmentBook book = null;
+
+        if (file.exists()) {
+            TextParser textParser= new TextParser(file.toString(), ownerName);
+            try{
+                book = textParser.parse();
+            }
+            catch(ParserException e){
+                System.err.println(e);
+                String message = e.toString();
+                Intent intent = new Intent(this, DisplayMessageActivity.class);
+                intent.putExtra("message", message);
+                intent.putExtra("title", "An Error Occured!");
+                startActivity(intent);
+                return;
+            }
+        }
+        else {
+            String message = "No appointment book found for specified owner";
+            System.err.println(message);
+            Intent intent = new Intent(this, DisplayMessageActivity.class);
+            intent.putExtra("message", message);
+            intent.putExtra("title", "All Appointments");
+            startActivity(intent);
+            return;
+        }
+
+        ArrayList<Appointment> allAppointments;
+        ArrayList<Appointment> foundAppointments= new ArrayList<Appointment>();
+        Date rangeStart=null;
+        Date rangeEnd=null;
+        //boolean timeError=false;
+
+        ValidateTime vt= new ValidateTime();
+        try{
+            rangeStart= vt.validateAndMakeDate(beginTime);
+        }catch(InvalidTimeException e){
+            System.err.println(e);
+            String message = e.toString();
+            Intent intent = new Intent(this, DisplayMessageActivity.class);
+            intent.putExtra("message", message);
+            intent.putExtra("title", "An Error Occured!");
+            startActivity(intent);
+            return;
+        }
+        try{
+            rangeEnd= vt.validateAndMakeDate(endTime);
+        }catch(InvalidTimeException e){
+            System.err.println(e);
+            String message = e.toString();
+            Intent intent = new Intent(this, DisplayMessageActivity.class);
+            intent.putExtra("message", message);
+            intent.putExtra("title", "An Error Occured!");
+            startActivity(intent);
+            return;
+        }
+
+        //make sure beginTime is begore endtime
+        if( rangeStart.getTime() > rangeEnd.getTime()){
+            String message = "start time must be before end time.";
+            Intent intent = new Intent(this, DisplayMessageActivity.class);
+            intent.putExtra("message", message);
+            intent.putExtra("title", "An Error Occured!");
+            startActivity(intent);
+            return;
+        }
+
+        String line="";
+        if (book!=null){
+            allAppointments= new ArrayList(book.getAppointments());
+            for(Appointment appt: allAppointments){
+                if( appt.beginDateTime.getTime()>= rangeStart.getTime() && appt.endDateTime.getTime()<= rangeEnd.getTime()){
+                    foundAppointments.add(appt);
+                }
+            }
+
+
+            if(foundAppointments.size()>0){
+                line= ownerName + "'s Appointments:"+ "\n";
+                for(Appointment appt: foundAppointments){
+                    line= line + appt.print_appointment() + "\n";
+                }
+            }
+            else{
+                line= "No appointments found for " + ownerName + " within specified range";
+            }
+        }
+        else{
+            line= "No appointmentbook for owner: " + ownerName;
+        }
+
+        String message = line;
+        Intent intent = new Intent(this, DisplayMessageActivity.class);
+        intent.putExtra("message", message);
+        intent.putExtra("title", "Appointment Book Search");
+        startActivity(intent);
+        return;
+
+    }
+}

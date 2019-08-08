@@ -42,6 +42,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void searchAppointments(View view){
+        Intent intent = new Intent(this, SearchAppointmentsActivity.class);
+        startActivity(intent);
+    }
+
     public void deleteAllAppointmentBooks(View view){
         File directory = this.getFilesDir();
         String[] fileList=directory.list();
