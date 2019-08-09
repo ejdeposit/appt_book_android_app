@@ -53,16 +53,9 @@ public class MakeAppointmentActivity extends AppCompatActivity {
 
         if(description.equals("") || ownerName.equals("")){
             String message = "Missing required field";
-            /*
             System.err.println(message);
-            Intent intent = new Intent(this, DisplayMessageActivity.class);
-            intent.putExtra("message", message);
-            intent.putExtra("title", "An Error Occured!");
-            startActivity(intent);
-            */
             TextView textView = (TextView) findViewById(R.id.errorBox);
             textView.setText("Error: "+ message);
-
             return;
         }
 
@@ -70,10 +63,8 @@ public class MakeAppointmentActivity extends AppCompatActivity {
         if(beginTimeArr.length != 3){
             String message = "Begin Time must include date, time, and time of Day";
             System.err.println(message);
-            Intent intent = new Intent(this, DisplayMessageActivity.class);
-            intent.putExtra("message", message);
-            intent.putExtra("title", "An Error Occured!");
-            startActivity(intent);
+            TextView textView = (TextView) findViewById(R.id.errorBox);
+            textView.setText("Error: "+ message);
             return;
         }
 
@@ -81,10 +72,8 @@ public class MakeAppointmentActivity extends AppCompatActivity {
         if(endTimeArr.length != 3){
             String message = "End Time must include date, time, and time of Day";
             System.err.println(message);
-            Intent intent = new Intent(this, DisplayMessageActivity.class);
-            intent.putExtra("message", message);
-            intent.putExtra("title", "An Error Occured!");
-            startActivity(intent);
+            TextView textView = (TextView) findViewById(R.id.errorBox);
+            textView.setText("Error: "+ message);
             return;
         }
 
@@ -95,10 +84,8 @@ public class MakeAppointmentActivity extends AppCompatActivity {
         catch(InvalidTimeException e){
             System.err.println(e);
             String message = e.toString();
-            Intent intent = new Intent(this, DisplayMessageActivity.class);
-            intent.putExtra("message", message);
-            intent.putExtra("title", "An Error Occured!");
-            startActivity(intent);
+            TextView textView = (TextView) findViewById(R.id.errorBox);
+            textView.setText("Error: "+ message);
             return;
         }
 
@@ -127,10 +114,8 @@ public class MakeAppointmentActivity extends AppCompatActivity {
             catch(ParserException e){
                 System.err.println(e);
                 String message = e.toString();
-                Intent intent = new Intent(this, DisplayMessageActivity.class);
-                intent.putExtra("message", message);
-                intent.putExtra("title", "An Error Occured!");
-                startActivity(intent);
+                TextView textView = (TextView) findViewById(R.id.errorBox);
+                textView.setText("Error: "+ message);
                 return;
             }
         }
@@ -149,10 +134,8 @@ public class MakeAppointmentActivity extends AppCompatActivity {
         catch(IOException e){
             System.err.println(e);
             String message = e.toString();
-            Intent intent = new Intent(this, DisplayMessageActivity.class);
-            intent.putExtra("message", message);
-            intent.putExtra("title", "An Error Occured!");
-            startActivity(intent);
+            TextView textView = (TextView) findViewById(R.id.errorBox);
+            textView.setText("Error: "+ message);
             return;
         }
 
@@ -168,11 +151,9 @@ public class MakeAppointmentActivity extends AppCompatActivity {
         catch (IOException ex) {
             System.err.println(ex);
             String message = ex.toString();
-            Intent intent = new Intent(this, DisplayMessageActivity.class);
-            intent.putExtra("message", message);
-            intent.putExtra("title", "An Error Occured!");
-
-            startActivity(intent);
+            TextView textView = (TextView) findViewById(R.id.errorBox);
+            textView.setText("Error: "+ message);
+            return;
         }
         Intent intent = new Intent(this, DisplayMessageActivity.class);
         String message = appointment.print_appointment();
