@@ -16,10 +16,11 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="TextView"
+        android:textSize="24sp"
+        app:fontFamily="casual"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
 
     <TextView
@@ -33,6 +34,8 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:text="TextView"
+        android:textSize="18sp"
+        app:fontFamily="casual"
         app:layout_constraintBottom_toTopOf="@+id/returnToMenu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

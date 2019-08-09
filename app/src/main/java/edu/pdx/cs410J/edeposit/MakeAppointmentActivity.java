@@ -13,6 +13,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 public class MakeAppointmentActivity extends AppCompatActivity {
 
@@ -52,11 +53,16 @@ public class MakeAppointmentActivity extends AppCompatActivity {
 
         if(description.equals("") || ownerName.equals("")){
             String message = "Missing required field";
+            /*
             System.err.println(message);
             Intent intent = new Intent(this, DisplayMessageActivity.class);
             intent.putExtra("message", message);
             intent.putExtra("title", "An Error Occured!");
             startActivity(intent);
+            */
+            TextView textView = (TextView) findViewById(R.id.errorBox);
+            textView.setText("Error: "+ message);
+
             return;
         }
 
@@ -92,7 +98,6 @@ public class MakeAppointmentActivity extends AppCompatActivity {
             Intent intent = new Intent(this, DisplayMessageActivity.class);
             intent.putExtra("message", message);
             intent.putExtra("title", "An Error Occured!");
-
             startActivity(intent);
             return;
         }

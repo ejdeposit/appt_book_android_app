@@ -101,7 +101,7 @@ public class PrintAppointmentBookActivity extends AppCompatActivity {
             try {
                 BufferedReader br = new BufferedReader(new FileReader(prettyFile.toString()));
                 while (br.ready()) {
-                    line = line + br.readLine();
+                    line = line + br.readLine() + "\n";
                     //System.out.println(line);
                 }
             }
