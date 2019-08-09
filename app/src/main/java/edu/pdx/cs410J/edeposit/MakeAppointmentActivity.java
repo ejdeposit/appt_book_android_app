@@ -97,7 +97,7 @@ public class MakeAppointmentActivity extends AppCompatActivity {
         }
         fileName=fileName+".apb";
 
-        System.out.println("File Name to store Appointment Book: " + fileName);
+        //System.out.println("File Name to store Appointment Book: " + fileName);
 
         File file = new File(this.getFilesDir(), fileName);
 
@@ -114,8 +114,10 @@ public class MakeAppointmentActivity extends AppCompatActivity {
             catch(ParserException e){
                 System.err.println(e);
                 String message = e.toString();
-                TextView textView = (TextView) findViewById(R.id.errorBox);
-                textView.setText("Error: "+ message);
+                Intent intent = new Intent(this, DisplayMessageActivity.class);
+                intent.putExtra("message", message);
+                intent.putExtra("title", "An Error Occured!");
+                startActivity(intent);
                 return;
             }
         }
@@ -134,8 +136,10 @@ public class MakeAppointmentActivity extends AppCompatActivity {
         catch(IOException e){
             System.err.println(e);
             String message = e.toString();
-            TextView textView = (TextView) findViewById(R.id.errorBox);
-            textView.setText("Error: "+ message);
+            Intent intent = new Intent(this, DisplayMessageActivity.class);
+            intent.putExtra("message", message);
+            intent.putExtra("title", "An Error Occured!");
+            startActivity(intent);
             return;
         }
 
@@ -151,8 +155,10 @@ public class MakeAppointmentActivity extends AppCompatActivity {
         catch (IOException ex) {
             System.err.println(ex);
             String message = ex.toString();
-            TextView textView = (TextView) findViewById(R.id.errorBox);
-            textView.setText("Error: "+ message);
+            Intent intent = new Intent(this, DisplayMessageActivity.class);
+            intent.putExtra("message", message);
+            intent.putExtra("title", "An Error Occured!");
+            startActivity(intent);
             return;
         }
         Intent intent = new Intent(this, DisplayMessageActivity.class);

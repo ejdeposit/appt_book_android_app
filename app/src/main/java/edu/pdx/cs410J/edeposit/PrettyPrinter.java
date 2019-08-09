@@ -40,7 +40,7 @@ public class PrettyPrinter {
             FileWriter fOut = new FileWriter(this.outputOption);
             BufferedWriter bw = new BufferedWriter(fOut);
 
-            bw.write(book.getOwnerName()+"'s Appointments: ");
+            bw.write(book.getOwnerName()+"'s Appointments: "+ "\n");
             bw.newLine();
 
             for(Appointment appt: apptList){
@@ -52,7 +52,8 @@ public class PrettyPrinter {
                 duration= duration/1000;
                 duration= duration/60;
 
-                bw.write(appt.getDescription() + " from " + df.format(appt.beginDateTime) + " until " +  df.format(appt.endDateTime) + "(" + Long.toString(duration) +" minutes" + ")");
+                bw.write(appt.getDescription() + " from " + df.format(appt.beginDateTime) + " until " +  df.format(appt.endDateTime) + " (" + Long.toString(duration) +" minutes" + ")");
+                bw.newLine();
                 bw.newLine();
             }
             bw.close();

@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -111,6 +112,8 @@ public class SearchAppointmentsActivity extends AppCompatActivity {
             return;
         }
 
+        int f= DateFormat.SHORT;
+        DateFormat df=DateFormat.getDateTimeInstance(f, f);
         String line="";
         if (book!=null){
             allAppointments= new ArrayList(book.getAppointments());
@@ -119,12 +122,17 @@ public class SearchAppointmentsActivity extends AppCompatActivity {
                     foundAppointments.add(appt);
                 }
             }
-
-
             if(foundAppointments.size()>0){
-                line= ownerName + "'s Appointments:"+ "\n";
+                line= ownerName + "'s Appointments:"+ "\n\n";
                 for(Appointment appt: foundAppointments){
-                    line= line + appt.print_appointment() + "\n";
+                    long begin=appt.beginDateTime.getTime();
+                    long end= appt.endDateTime.getTime();
+                    long duration= end-begin;
+                    duration= duration/1000;
+                    duration= duration/60;
+                    String apptStr = appt.getDescription() + " from " + df.format(appt.beginDateTime) + " until " +  df.format(appt.endDateTime) + " (" + Long.toString(duration) +" minutes" + ")";
+                    line= line + apptStr + "\n\n";
+                    //line= line + appt.print_appointment() + "\n";
                 }
             }
             else{

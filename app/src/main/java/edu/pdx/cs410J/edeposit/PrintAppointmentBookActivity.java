@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -35,10 +36,8 @@ public class PrintAppointmentBookActivity extends AppCompatActivity {
         if(ownerName.equals("")){
             String message = "Please Enter an appointment book owner";
             System.err.println(message);
-            Intent intent = new Intent(this, DisplayMessageActivity.class);
-            intent.putExtra("message", message);
-            intent.putExtra("title", "An Error Occured!");
-            startActivity(intent);
+            TextView textView = (TextView) findViewById(R.id.errorBox);
+            textView.setText("Error: "+ message);
             return;
         }
 
@@ -120,7 +119,7 @@ public class PrintAppointmentBookActivity extends AppCompatActivity {
             Intent intent = new Intent(this, DisplayMessageActivity.class);
             String message = line;
             intent.putExtra("message", message);
-            intent.putExtra("title", "Appointment Book");
+            intent.putExtra("title", "View All Appointments");
             startActivity(intent);
 
         }
