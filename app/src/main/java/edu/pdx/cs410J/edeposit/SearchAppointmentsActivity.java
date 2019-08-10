@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -34,6 +35,14 @@ public class SearchAppointmentsActivity extends AppCompatActivity {
 
         editText = (EditText) findViewById(R.id.endTime);
         endTime = editText.getText().toString();
+
+        if(ownerName.equals("") || beginTime.equals("") || endTime.equals("")){
+            String message = "Missing required field";
+            System.err.println(message);
+            TextView textView = (TextView) findViewById(R.id.errorBox);
+            textView.setText("Error: "+ message);
+            return;
+        }
 
         String fileName = ownerName.trim();
         String[] nameArr = fileName.split(" ");
@@ -67,7 +76,7 @@ public class SearchAppointmentsActivity extends AppCompatActivity {
             System.err.println(message);
             Intent intent = new Intent(this, DisplayMessageActivity.class);
             intent.putExtra("message", message);
-            intent.putExtra("title", "All Appointments");
+            intent.putExtra("title", "Search Appointments");
             startActivity(intent);
             return;
         }
@@ -84,10 +93,8 @@ public class SearchAppointmentsActivity extends AppCompatActivity {
         }catch(InvalidTimeException e){
             System.err.println(e);
             String message = e.toString();
-            Intent intent = new Intent(this, DisplayMessageActivity.class);
-            intent.putExtra("message", message);
-            intent.putExtra("title", "An Error Occured!");
-            startActivity(intent);
+            TextView textView = (TextView) findViewById(R.id.errorBox);
+            textView.setText("Error: " + message);
             return;
         }
         try{
@@ -95,20 +102,16 @@ public class SearchAppointmentsActivity extends AppCompatActivity {
         }catch(InvalidTimeException e){
             System.err.println(e);
             String message = e.toString();
-            Intent intent = new Intent(this, DisplayMessageActivity.class);
-            intent.putExtra("message", message);
-            intent.putExtra("title", "An Error Occured!");
-            startActivity(intent);
+            TextView textView = (TextView) findViewById(R.id.errorBox);
+            textView.setText("Error: "+ message);
             return;
         }
 
         //make sure beginTime is begore endtime
         if( rangeStart.getTime() > rangeEnd.getTime()){
             String message = "start time must be before end time.";
-            Intent intent = new Intent(this, DisplayMessageActivity.class);
-            intent.putExtra("message", message);
-            intent.putExtra("title", "An Error Occured!");
-            startActivity(intent);
+            TextView textView = (TextView) findViewById(R.id.errorBox);
+            textView.setText("Error: "+ message);
             return;
         }
 
@@ -150,5 +153,10 @@ public class SearchAppointmentsActivity extends AppCompatActivity {
         startActivity(intent);
         return;
 
+    }
+
+    public void returnHome(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
