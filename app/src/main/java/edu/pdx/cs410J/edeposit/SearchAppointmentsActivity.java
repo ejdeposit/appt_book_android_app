@@ -76,7 +76,7 @@ public class SearchAppointmentsActivity extends AppCompatActivity {
             System.err.println(message);
             Intent intent = new Intent(this, DisplayMessageActivity.class);
             intent.putExtra("message", message);
-            intent.putExtra("title", "Search Appointments");
+            intent.putExtra("title", "Appointment Book Search");
             startActivity(intent);
             return;
         }
