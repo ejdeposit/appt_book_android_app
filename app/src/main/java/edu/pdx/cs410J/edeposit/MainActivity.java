@@ -61,4 +61,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    public void readMe(View view){
+        String message = "New Appointment:\nTo create a new appointment click on the new appointment button and enter the appointment book owner's name, description of the appointment, begin time of the appointment and the end time.  The name and description can be one or more words, but must not include any back ticks \"`\".  The begin time and end time must use the following format: \"MM/dd/yyyy HH:mm a\", where a is the either AM or PM\n\nView All Appointments:\nTo view all appointments for an owner click on the View All Appointments button and enter the name of the owner.\n\nSearch Appointment Book:\nTo view only appointments that fall within a specified range, click on the Search Appointment Book button.  Enter the appointment book owner's name, and the time range.  The begin time and end time must use the same format that was used to create a new appointment: \"MM/dd/yyyy HH:mm a\"\n\nREADME:\nDisplays the README for the application\n\nDELETE ALL APPOINTMENT BOOKS:\nclicking the DELETE ALL APPOINTMENT BOOKS button will delete all appointment books, owner inforamtion from the phone. This button is inteneded for manual testing purposes.\n\n";
+        Intent intent = new Intent(this, DisplayMessageActivity.class);
+        intent.putExtra("message", message);
+        intent.putExtra("title", "README");
+        startActivity(intent);
+    }
 }
